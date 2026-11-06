@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory Admin | Axons Auto</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+  <header class="site-header"><a class="brand" href="index.html"><span>AXONS</span> AUTO <small>INVENTORY ADMIN</small></a><nav><a href="index.html" target="_blank">View website ↗</a></nav></header>
+  <main class="wrap admin-wrap">
+    <section id="loginPanel" class="admin-login panel">
+      <p class="eyebrow">PRIVATE AREA</p><h1>Admin sign in</h1><p class="muted">Sign in with an account that has been approved as an Axons Auto administrator.</p>
+      <form id="loginForm" class="stack-form">
+        <label>Email<input id="loginEmail" type="email" autocomplete="username" required></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required></label>
+        <button class="button button-dark" type="submit">Sign in</button>
+        <p id="loginMessage" class="form-message" role="status"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="admin-top"><div><p class="eyebrow">INVENTORY MANAGEMENT</p><h1>Vehicle dashboard</h1><p class="muted">Add, update and manage the cars displayed on your website.</p></div><button id="signOutBtn" class="button button-outline">Sign out</button></div>
+      <div class="stats-row"><div class="stat-card"><span>Total cars</span><strong id="totalCount">0</strong></div><div class="stat-card"><span>Available</span><strong id="availableCount">0</strong></div><div class="stat-card"><span>Reserved</span><strong id="reservedCount">0</strong></div><div class="stat-card"><span>Sold</span><strong id="soldCount">0</strong></div></div>
+
+      <section class="panel form-panel">
+        <div class="section-heading"><div><p class="eyebrow">VEHICLE RECORD</p><h2 id="formTitle">Add a car</h2></div><button id="resetFormBtn" class="button button-outline" type="button">Clear form</button></div>
+        <form id="carForm">
+          <input id="carId" type="hidden">
+          <div class="form-grid">
+            <label>Brand *<input id="brand" required placeholder="BMW"></label>
+            <label>Model *<input id="model" required placeholder="X5"></label>
+            <label>Variant<input id="variant" placeholder="xDrive40i"></label>
+            <label>Model year *<input id="year" type="number" min="1980" max="2100" required placeholder="2025"></label>
+            <label>Registration year<input id="registration_year" type="number" min="1980" max="2100" placeholder="2025"></label>
+            <label>Registration / RTO<input id="registration_number" placeholder="HR26 (optional)"></label>
+            <label>Asking price (₹) *<input id="price" type="number" min="0" step="1000" required placeholder="8500000"></label>
+            <label>Price negotiable<select id="negotiable"><option value="true">Yes</option><option value="false">No</option></select></label>
+            <label>Kilometres driven *<input id="km_driven" type="number" min="0" required placeholder="12000"></label>
+            <label>Fuel *<select id="fuel" required><option value="">Select fuel</option><option>Petrol</option><option>Diesel</option><option>Electric</option><option>Hybrid</option><option>CNG</option></select></label>
+            <label>Transmission *<select id="transmission" required><option value="">Select transmission</option><option>Automatic</option><option>Manual</option><option>AMT</option><option>CVT</option><option>DCT</option></select></label>
+            <label>Engine (cc)<input id="engine_cc" type="number" min="0" placeholder="2998"></label>
+            <label>Power (BHP)<input id="bhp" type="number" min="0" step="0.1" placeholder="375"></label>
+            <label>Drivetrain<input id="drivetrain" placeholder="AWD / RWD / FWD"></label>
+            <label>Ownership<select id="ownership"><option value="">Select ownership</option><option>1st Owner</option><option>2nd Owner</option><option>3rd Owner</option><option>4th Owner or more</option></select></label>
+            <label>Exterior colour<input id="exterior_color" placeholder="Black"></label>
+            <label>Interior colour<input id="interior_color" placeholder="Black"></label>
+            <label>Insurance valid till<input id="insurance_valid_till" type="date"></label>
+            <label>Insurance type<input id="insurance_type" placeholder="Comprehensive / Third party"></label>
+            <label>PUC valid till<input id="puc_valid_till" type="date"></label>
+            <label>Tyre condition<input id="tyre_condition" placeholder="80% remaining"></label>
+            <label>City<input id="city" placeholder="Gurugram"></label>
+            <label>Listing status<select id="status"><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select></label>
+          </div>
+          <div class="form-checks"><label class="check-label"><input id="featured" type="checkbox"> Show in featured slider</label></div>
+          <label>Description<textarea id="description" rows="4" placeholder="Describe condition, features and highlights…"></textarea></label>
+          <div class="form-grid">
+            <label>Service history<textarea id="service_history" rows="3" placeholder="Full / partial / not available"></textarea></label>
+            <label>Accident history<textarea id="accident_history" rows="3" placeholder="Declare known accident history"></textarea></label>
+          </div>
+          <label class="upload-label">Car photographs (select multiple)<input id="imageFiles" type="file" accept="image/*" multiple><small>Recommended: clear front, rear, both sides, dashboard, seats and engine photos. Keep each image under 8 MB.</small></label>
+          <div id="existingImages" class="image-preview-grid"></div>
+          <p id="formMessage" class="form-message" role="status"></p>
+          <div class="form-actions"><button class="button button-dark" type="submit" id="saveCarBtn">Save car</button><button class="button button-outline" type="button" id="cancelEditBtn">Cancel</button></div>
+        </form>
+      </section>
+
+      <section class="panel inventory-panel">
+        <div class="section-heading"><div><p class="eyebrow">ALL LISTINGS</p><h2>Manage inventory</h2></div><input id="adminSearch" class="admin-search" placeholder="Search inventory…"></div>
+        <div class="table-scroll"><table class="inventory-table"><thead><tr><th>Vehicle</th><th>Year</th><th>Price</th><th>KM</th><th>Status</th><th>Actions</th></tr></thead><tbody id="inventoryRows"><tr><td colspan="6">Loading inventory…</td></tr></tbody></table></div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
